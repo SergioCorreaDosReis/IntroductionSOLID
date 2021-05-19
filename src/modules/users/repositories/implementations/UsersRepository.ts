@@ -9,7 +9,8 @@ class UsersRepository implements IUsersRepository {
   private constructor() {
     this.users = [];
   }
-
+  // Metodo responsavel pór instanciar o repositorio
+  // Ele verifica se ja esxiste uma instancia aberta se nao tiver ele cria
   public static getInstance(): UsersRepository {
     if (!UsersRepository.INSTANCE) {
       UsersRepository.INSTANCE = new UsersRepository();
@@ -18,31 +19,38 @@ class UsersRepository implements IUsersRepository {
     return UsersRepository.INSTANCE;
   }
 
-  create({ name, email }: ICreateUserDTO): void {
+  create({ name, email }: ICreateUserDTO): User {
     const user = new User();
 
     Object.assign(user, {
       name,
       email,
       created_at: new Date(),
+      updated_at: new Date(),
     });
     this.users.push(user);
+    return user;
   }
 
   findById(id: string): User | undefined {
-    // Complete aqui
+    const user = this.users.find((user) => user.id === id);
+    return user;
   }
 
   findByEmail(email: string): User | undefined {
-    // Complete aqui
+    const user = this.users.find((user) => user.email === email);
+    return user;
   }
 
   turnAdmin(receivedUser: User): User {
-    // Complete aqui
+    const user = this.users.findIndex((user) => user.id === receivedUser.id);
+    this.users[user].admin = true;
+    this.users[user].updated_at = new Date();
+    return this.users[user];
   }
 
   list(): User[] {
-    // Complete aqui
+    return this.users;
   }
 }
 
