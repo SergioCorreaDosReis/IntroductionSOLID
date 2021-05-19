@@ -18,8 +18,7 @@ class ListAllUsersUseCase {
       throw new Error("User dosent have permission as Admin");
     }
 
-    const users = this.usersRepository.list();
-    return users;
+    return this.usersRepository.list();
   }
 }
 
