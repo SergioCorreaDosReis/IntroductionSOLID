@@ -93,25 +93,24 @@
                                                 "type": "date"
                                             }
                                         },
-                                        "example":[
-                                           {
-                                            "id": "2e47abde-0a80-48fb-8852-c82fb85a6678",
-                                            "admin": false,
-                                            "name": "Sergio Correa",
-                                            "email": "sergio@email.com.br",
-                                            "created_at": "2021-05-24T19:06:55.029Z",
-                                            "updated_at": "2021-05-24T19:06:55.029Z"
-                                          },
-                                          {
-                                            "id": "2e47abde-0a80-48fb-8852-c82fb85a7795",
-                                            "admin": true,
-                                            "name": "Pedro Augusto",
-                                            "email": "pedro@email.com.br",
-                                            "created_at": "2021-05-24T19:06:55.029Z",
-                                            "updated_at": "2021-05-24T19:06:55.029Z"
-                                          }
+                                        "example": [
+                                            {
+                                                "id": "2e47abde-0a80-48fb-8852-c82fb85a6678",
+                                                "admin": false,
+                                                "name": "Sergio Correa",
+                                                "email": "sergio@email.com.br",
+                                                "created_at": "2021-05-24T19:06:55.029Z",
+                                                "updated_at": "2021-05-24T19:06:55.029Z"
+                                            },
+                                            {
+                                                "id": "2e47abde-0a80-48fb-8852-c82fb85a7795",
+                                                "admin": true,
+                                                "name": "Pedro Augusto",
+                                                "email": "pedro@email.com.br",
+                                                "created_at": "2021-05-24T19:06:55.029Z",
+                                                "updated_at": "2021-05-24T19:06:55.029Z"
+                                            }
                                         ]
-                                        
                                     }
                                 }
                             }
@@ -120,7 +119,7 @@
                     "400": {
                         "description": "The user doesn't have admin permission!",
                         "content": {
-                            "application/json":{
+                            "application/json": {
                                 "schema": {
                                     "type": "object",
                                     "properties": {
@@ -129,6 +128,174 @@
                                         },
                                         "example": {
                                             "error": "User doesn't have permission as Admin!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{user_id}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "List a specific user",
+                "description": "List a specific user by id",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "ID do Usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Query was successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "Object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "string"
+                                            },
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "admin": {
+                                                "type": "boolean"
+                                            },
+                                            "emai": {
+                                                "type": "string"
+                                            },
+                                            "created_at": {
+                                                "type": "date"
+                                            },
+                                            "updated_at": {
+                                                "type": "date"
+                                            }
+                                        },
+                                        "example": [
+                                            {
+                                                "id": "2e47abde-0a80-48fb-8852-c82fb85a6678",
+                                                "admin": false,
+                                                "name": "Sergio Correa",
+                                                "email": "sergio@email.com.br",
+                                                "created_at": "2021-05-24T19:06:55.029Z",
+                                                "updated_at": "2021-05-24T19:06:55.029Z"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "The user was not found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "message"
+                                        },
+                                        "example": {
+                                            "error": "The user was not found."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{user_id}/admin": {
+            "patch": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Update user to admin",
+                "description": "update user to admin privileges",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description":"ID do Usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format":"uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "User permission update was successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "Object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "string"
+                                            },
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "admin": {
+                                                "type": "boolean"
+                                            },
+                                            "emai": {
+                                                "type": "string"
+                                            },
+                                            "created_at": {
+                                                "type": "date"
+                                            },
+                                            "updated_at": {
+                                                "type": "date"
+                                            }
+                                        },
+                                        "example": [
+                                            {
+                                                "id": "2e47abde-0a80-48fb-8852-c82fb85a6678",
+                                                "admin": false,
+                                                "name": "Sergio Correa",
+                                                "email": "sergio@email.com.br",
+                                                "created_at": "2021-05-24T19:06:55.029Z",
+                                                "updated_at": "2021-05-24T19:06:55.029Z"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "The user was not found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "message"
+                                        },
+                                        "example": {
+                                            "error": "The user was not found."
                                         }
                                     }
                                 }
