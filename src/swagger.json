@@ -1,0 +1,142 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "First Steps SOLID Documentation!",
+        "description": "This is an API to validate my first program using SOLID architecture",
+        "version": "1.0.0",
+        "contact": {
+            "email": "sergioc_reis@hotmail.com"
+        }
+    },
+    "paths": {
+        "/users": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Create a user",
+                "description": "Create a new user",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "name": "Sergio Correa",
+                                    "email": "sergio@email.com.br"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created successfully"
+                    },
+                    "400": {
+                        "description": "User e-mail already exists!"
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "List all users",
+                "description": "List all users, only allowed for users with admin privileges ",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "header",
+                        "description": "ID do Usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List with all users registered",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "Object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "string"
+                                            },
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "admin": {
+                                                "type": "boolean"
+                                            },
+                                            "emai": {
+                                                "type": "string"
+                                            },
+                                            "created_at": {
+                                                "type": "date"
+                                            },
+                                            "updated_at": {
+                                                "type": "date"
+                                            }
+                                        },
+                                        "example":[
+                                           {
+                                            "id": "2e47abde-0a80-48fb-8852-c82fb85a6678",
+                                            "admin": false,
+                                            "name": "Sergio Correa",
+                                            "email": "sergio@email.com.br",
+                                            "created_at": "2021-05-24T19:06:55.029Z",
+                                            "updated_at": "2021-05-24T19:06:55.029Z"
+                                          },
+                                          {
+                                            "id": "2e47abde-0a80-48fb-8852-c82fb85a7795",
+                                            "admin": true,
+                                            "name": "Pedro Augusto",
+                                            "email": "pedro@email.com.br",
+                                            "created_at": "2021-05-24T19:06:55.029Z",
+                                            "updated_at": "2021-05-24T19:06:55.029Z"
+                                          }
+                                        ]
+                                        
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "The user doesn't have admin permission!",
+                        "content": {
+                            "application/json":{
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "message"
+                                        },
+                                        "example": {
+                                            "error": "User doesn't have permission as Admin!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
